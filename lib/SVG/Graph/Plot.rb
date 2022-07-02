@@ -402,17 +402,18 @@ module SVG
             })
           end
 
-          if show_lines
+          if data.fetch(:show_lines, show_lines)
             @graph.add_element( "path", {
               "d" => "M#{x_start} #{y_start} #{lpath}",
               "class" => "line#{line}"
             })
           end
 
-          if show_data_points || show_data_values || add_popups
+          _show_data_points = data.fetch(:show_data_points, show_data_points)
+          if _show_data_points || show_data_values || add_popups
             x_points.each_index { |idx|
               c = calc_coords(x_points[idx] -  x_min, y_points[idx] -  y_min)
-              if show_data_points
+              if _show_data_points
                 shape_selection_string = data[:description][idx].to_s
                 if !data[:shape][idx].nil?
                   shape_selection_string = data[:shape][idx].to_s
